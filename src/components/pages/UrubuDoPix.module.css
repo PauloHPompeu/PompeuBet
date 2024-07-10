@@ -1,0 +1,89 @@
+.urubu_container {
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+}
+.urubu_container h1 {
+    margin-bottom: 1em;
+}
+.urubu_container h3 {
+    font-weight: bold;
+    color: #ca3434;
+}
+.urubu_container h2 {
+    font-weight: bold;
+}
+.urubu_container h4 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.transacao {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    object-fit: cover;
+}
+.img {
+    object-fit: cover;
+}
+
+.pix {
+    width: 50%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.pix input {
+    margin-top: 1em;
+    width: 35%;
+    margin-bottom: 1.5em;
+    position: relative;
+}
+.pix button {
+    font-weight: bold;
+    width: 140px;
+    height: 40px;
+    background-color: #ca3434;
+    color: #fff;
+    border-radius: 5px;
+    border: solid #000 1px;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+.pix button:hover {
+    background-color: #e74c3c;
+}
+.qrCodeContainer {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.formPix {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.formPix input{
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+    border: #000 solid 1px;
+}
+.formPix p {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+
+  
+
+

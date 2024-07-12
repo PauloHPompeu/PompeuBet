@@ -30,6 +30,11 @@ public class EventoController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/deletar")
+    public ResponseEntity<HttpStatus> deletarEvento(@RequestParam EventoDTO eventoDTO) {
+        return eventoService.deletarEvento(eventoDTO);
+    }
+
     @GetMapping("/findEventoById/{id}")
     public ResponseEntity<Evento> findEventoById (@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(eventoService.findEventoById(id));

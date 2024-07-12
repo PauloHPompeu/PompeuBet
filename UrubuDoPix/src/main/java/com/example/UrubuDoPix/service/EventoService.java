@@ -5,6 +5,8 @@ import com.example.UrubuDoPix.entity.Evento;
 import com.example.UrubuDoPix.repository.EventoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +26,17 @@ public class EventoService {
         evento.setCategoria(eventoDTO.getCategoria());
 
         eventoRepository.save(evento);
+    }
+
+    public ResponseEntity<HttpStatus> deletarEvento(EventoDTO eventoDTO) {
+        Evento evento = eventoRepository.findByNome(eventoDTO.getNome());
+
+        if (evento != null) {
+            eventoRepository.delete(evento);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public List<Evento> findAllBetByEventoId (Integer id) {

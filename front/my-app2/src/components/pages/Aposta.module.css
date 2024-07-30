@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #FFAF00;
+}
+
+.card {
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #7C00FE;
+  width: 25rem;  /* Ajusta a largura do card */
+}
+
+.input, .select {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  width: 100%;  /* Usa a largura completa disponível */
+  height: 2.5rem;  /* Aumenta a altura dos inputs */
+  padding: 0.5rem; /* Adiciona padding para melhor estética */
+  font-size: 1rem; /* Aumenta o tamanho da fonte */
+}
+
+.button {
+  width: 100%; /* Usa a largura completa disponível */
+  height: 2.5rem; /* Aumenta a altura do botão */
+  font-size: 1rem; /* Aumenta o tamanho da fonte */
+  border-radius: 8px; /* Bordas arredondadas */
+  background-color: #E65C55; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: none; /* Remove a borda do botão */
+  cursor: pointer; /* Adiciona cursor de pointer */
+  transition: background-color 0.3s; /* Adiciona transição suave para a cor de fundo */
+  margin-bottom: 1rem; /* Espaçamento entre botões */
+}
+
+.button:hover {
+  background-color: #F5004F; /* Cor de fundo do botão ao passar o mouse */
+}
+
+.modal {
+  padding: 2rem;
+}
+
+.modal .input {
+  margin-bottom: 1rem;
+}
+
+.modal .button {
+  width: auto; /* Ajusta a largura dos botões no modal */
+  margin-right: 1rem; /* Espaçamento entre botões no modal */
+}

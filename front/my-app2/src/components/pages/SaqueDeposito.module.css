@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffaf00;
+  }
+  
+  .card {
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #7c00fe;
+  }
+  
+  .usuario {
+    margin-bottom: 2rem;
+  }
+  
+  .geral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .transacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    width: 20rem;
+    height: 2.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .button {
+    width: 20rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    background-color: #e65c55;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #f5004f;
+  }
+  

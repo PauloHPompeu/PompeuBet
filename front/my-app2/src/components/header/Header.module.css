@@ -1,0 +1,38 @@
+#header {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #tituloHeader {
+    font-size: 2rem;
+    color: #173B45;
+    margin: 0;
+  }
+  
+  #saldo {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  #catalogo {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .homePage {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .homePage:hover {
+    text-decoration: underline;
+  }
+  

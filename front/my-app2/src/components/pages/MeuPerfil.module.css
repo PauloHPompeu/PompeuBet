@@ -1,0 +1,60 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #FFAF00;
+  }
+  
+  .card {
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #7C00FE;
+    width: 25rem;
+    text-align: center;
+  }
+  
+  .profilePic {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 1rem;
+  }
+  
+  .text {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  
+  .input {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    height: 2.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .button {
+    width: 100%;
+    height: 2.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    background-color: #E65C55;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 1rem;
+  }
+  
+  .button:hover {
+    background-color: #F5004F;
+  }
+  
+  .modal {
+    padding: 2rem;
+  }
+  

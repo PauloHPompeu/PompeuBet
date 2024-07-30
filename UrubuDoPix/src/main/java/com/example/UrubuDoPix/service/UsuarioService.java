@@ -36,6 +36,20 @@ public class UsuarioService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    public ResponseEntity<HttpStatus> deletarUsuario(UsuarioDTO usuarioDto) {
+        Usuario usuario = usuarioRepository.findByNome(usuarioDto.getNome());
+
+        if (usuario == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (passwordEncoder.matches(usuarioDto.getSenha(), usuario.getSenha())) {
+            usuarioRepository.delete(usuario);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     public ResponseEntity<HttpStatus> autenticarUsuario(UsuarioDTO usuarioDto) {
         Usuario usuario = usuarioRepository.findByNome(usuarioDto.getNome());
 

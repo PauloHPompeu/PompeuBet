@@ -15,4 +15,5 @@ public class BetDTO {
     private TipoBet tipoBet;
     private Long usuarioId;
     private Long eventoId;
+    private Integer id;
 }

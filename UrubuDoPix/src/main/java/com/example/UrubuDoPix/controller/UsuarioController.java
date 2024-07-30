@@ -18,8 +18,13 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<HttpStatus> cadastroEvento(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<HttpStatus> cadastraUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         return usuarioService.cadastraUsuario(usuarioDTO);
+    }
+
+    @PostMapping("/deletar")
+    public ResponseEntity<HttpStatus> deletarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        return usuarioService.deletarUsuario(usuarioDTO);
     }
 
     @GetMapping("/findUsuarioById/{id}")

@@ -30,6 +30,11 @@ public class BetController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/deletar")
+    public ResponseEntity<HttpStatus> deletarEvento(@RequestParam BetDTO betDTO) {
+        return betService.deletarBet(betDTO);
+    }
+
     @GetMapping("/findBetById/{id}")
     public ResponseEntity<Bet> findBetById (@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(betService.findBetById(id));

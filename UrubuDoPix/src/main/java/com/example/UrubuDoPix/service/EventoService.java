@@ -26,9 +26,9 @@ public class EventoService {
         eventoRepository.save(evento);
     }
 
-    public List<Evento> findAllBetByEventoId (Integer id) {
-        return eventoRepository.findAllBetByEventoId(Long.valueOf(id));
-    }
+    // public List<Evento> findAllBetByEventoId (Integer id) {
+    //     //return eventoRepository.findAllBetByEventoId(Long.valueOf(id));
+    // }
 
     public Evento findEventoById(Integer id) {
         return eventoRepository.findById(id.longValue()).get();

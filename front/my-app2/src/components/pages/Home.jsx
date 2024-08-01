@@ -1,16 +1,22 @@
 import { MantineProvider, Box, Card, TextInput } from "@mantine/core";
 import { useState } from "react";
 import axios from "axios";
-import styles from './Home.module.css';
+import styles from "./Home.module.css";
 
 function Home() {
   const [usuario, setUsuario] = useState({
-    usuario: "",
+    nome: "",
     senha: "",
   });
 
-  const autenticar = () => {
-    axios.post(`http://localhost:8080/usuario/cadastro`, usuario);
+  const autenticar = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/usuario/cadastro",
+        usuario
+      );
+      console.log(response);
+    } catch {}
   };
 
   return (
@@ -18,7 +24,9 @@ function Home() {
       <Box className={styles.container}>
         <Card className={styles.card} shadow="md" withBorder padding="md">
           <TextInput
-            onChange={(e) => setUsuario({ ...usuario, usuario: e.target.value })}
+            onChange={(e) =>
+              setUsuario({ ...usuario, usuario: e.target.value })
+            }
             value={usuario.usuario}
             classNames={{ input: styles.input }}
             placeholder="Digite o usuário"

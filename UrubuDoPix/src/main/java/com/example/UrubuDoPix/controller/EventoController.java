@@ -39,9 +39,4 @@ public class EventoController {
     public ResponseEntity<Evento> findEventoById (@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(eventoService.findEventoById(id));
     }
-
-    // @GetMapping("/findEventoById/{id}")
-    // public ResponseEntity<List<Evento>> findAllBetByEventoId (@PathVariable Integer id) {
-    //     return ResponseEntity.status(HttpStatus.OK).body(eventoService.findAllBetByEventoId(id));
-    // }
 }

@@ -39,8 +39,8 @@ public class EventoService {
         }
     }
 
-    public List<Evento> findAllBetByEventoId (Integer id) {
-        return eventoRepository.findAllBetByEventoId(Long.valueOf(id));
+    public List<Evento> findAllBetById (Integer id) {
+        return eventoRepository.findAllBetById(Long.valueOf(id));
     }
 
     public Evento findEventoById(Integer id) {

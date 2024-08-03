@@ -1,17 +1,62 @@
-import React, { useState } from 'react';
-import { MantineProvider, Box, Card, Text, Button, Group, Modal, TextInput } from '@mantine/core';
-import styles from './MeuPerfil.module.css';
+import React, { useState, useEffect } from "react";
+import {
+  MantineProvider,
+  Box,
+  Card,
+  Text,
+  Button,
+  Group,
+  TextInput,
+} from "@mantine/core";
+import styles from "./MeuPerfil.module.css";
+import axios from "axios";
 
 function MeuPerfil() {
   const [editProfile, setEditProfile] = useState(false);
-  const [userName, setUserName] = useState('Paulo Pompeu');
-  const [balance, setBalance] = useState(1000);
-  const [profitLoss, setProfitLoss] = useState(200);
-  const [profilePic, setProfilePic] = useState('https://www.github.com/PauloHPompeu.png');
+  const [userEdit, setUserEdit] = useState("");
+  const [senhaEdit, setSenhaEdit] = useState("");
+  const [user, setUser] = useState({ nome: "", saldo: 0 });
+  const [profilePic, setProfilePic] = useState(
+    "https://www.github.com/PauloHPompeu.png"
+  );
 
-  const handleSaveProfile = () => {
-    // Lógica para salvar alterações no perfil
+  const handleSaveProfile = async () => {
     setEditProfile(false);
+    try {
+      const response = await axios.post("http://localhost:8080/usuario/edit", {
+        nome: userEdit,
+        senha: senhaEdit,
+        id: localStorage.getItem("userId"),
+      });
+      if (response.status === 200) {
+        alert("Usuario atualizado com sucesso.");
+      }
+    } catch (error) {
+      alert("Erro na busca do usuário.");
+      console.error(error);
+    }
+
+    procuraUsuario();
+  };
+
+  useEffect(() => {
+    procuraUsuario();
+  }, []);
+
+  const procuraUsuario = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/usuario/findUsuarioById/${localStorage.getItem(
+          "userId"
+        )}`
+      );
+      if (response.status === 200) {
+        setUser(response.data);
+      }
+    } catch (error) {
+      alert("Erro na busca do usuário.");
+      console.error(error);
+    }
   };
 
   return (
@@ -19,40 +64,44 @@ function MeuPerfil() {
       <Box className={styles.container}>
         <Card className={styles.card} shadow="md" withBorder padding="md">
           <img src={profilePic} alt="Profile" className={styles.profilePic} />
-          <Text className={styles.text}>Nome: {userName}</Text>
-          <Text className={styles.text}>Saldo Atual: ${balance}</Text>
-          <Text className={styles.text}>Prejuízo/Lucro: ${profitLoss}</Text>
-          <Button onClick={() => setEditProfile(true)} className={styles.button}>Editar Perfil</Button>
+          <Text className={styles.text}>Nome: {user.nome}</Text>
+          <Text className={styles.text}>Saldo Atual: ${user.saldo}</Text>
+          <Button
+            onClick={() => setEditProfile(true)}
+            className={styles.button}
+          >
+            Editar Perfil
+          </Button>
         </Card>
+        {editProfile && (
+          <Card className={styles.card} shadow="md" withBorder padding="md">
+            <TextInput
+              label="Nome"
+              defaultValue={user.nome}
+              onChange={(e) => setUserEdit(e.target.value)}
+              className={styles.input}
+            />
 
-        <Modal
-          opened={editProfile}
-          onClose={() => setEditProfile(false)}
-          title="Editar Perfil"
-          className={styles.modal}
-        >
-          <TextInput
-            label="Nome"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            className={styles.input}
-          />
-          <TextInput
-            label="URL da Foto de Perfil"
-            value={profilePic}
-            onChange={(e) => setProfilePic(e.target.value)}
-            className={styles.input}
-          />
-          <TextInput
-            label="Nova Senha"
-            type="password"
-            className={styles.input}
-          />
-          <Group position="right" mt="md">
-            <Button onClick={handleSaveProfile} className={styles.button}>Salvar</Button>
-            <Button onClick={() => setEditProfile(false)} className={styles.button}>Cancelar</Button>
-          </Group>
-        </Modal>
+            <TextInput
+              label="Nova Senha"
+              type="password"
+              className={styles.input}
+              onChange={(e) => setSenhaEdit(e.target.value)}
+            />
+            <Group position="right" mt="md">
+              <Button onClick={handleSaveProfile} className={styles.button}>
+                Salvar
+              </Button>
+              <Button
+                onClick={() => setEditProfile(false)}
+                variant="outline"
+                className={styles.button}
+              >
+                Cancelar
+              </Button>
+            </Group>
+          </Card>
+        )}
       </Box>
     </MantineProvider>
   );

@@ -11,12 +11,32 @@ function Home() {
 
   const autenticar = async () => {
     try {
-      const response = await axios.post(
+      // Primeiro, realiza o cadastro
+      const cadastroResponse = await axios.post(
         "http://localhost:8080/usuario/cadastro",
-        usuario
+        {
+          nome: usuario.nome,
+          senha: usuario.senha,
+        }
       );
-      console.log(response);
-    } catch {}
+      if (cadastroResponse.status === 200) {
+        // Cadastro realizado com sucesso, agora obtém o ID do usuário
+        const usuarioResponse = await axios.get(
+          `http://localhost:8080/usuario/findUsuarioByNome/${usuario.nome}`
+        );
+        const userId = usuarioResponse.data; // Ajuste conforme a estrutura da resposta
+
+        // Armazena o ID no localStorage
+        localStorage.setItem("userId", userId);
+
+        // Redireciona para a página de apostas
+        alert("Cadastro realizado com sucesso!");
+        window.location.href = "/apostas";
+      }
+    } catch (error) {
+      alert("Erro no cadastro. Por favor, tente novamente.");
+      console.error(error);
+    }
   };
 
   return (
@@ -24,10 +44,8 @@ function Home() {
       <Box className={styles.container}>
         <Card className={styles.card} shadow="md" withBorder padding="md">
           <TextInput
-            onChange={(e) =>
-              setUsuario({ ...usuario, usuario: e.target.value })
-            }
-            value={usuario.usuario}
+            onChange={(e) => setUsuario({ ...usuario, nome: e.target.value })}
+            value={usuario.nome}
             classNames={{ input: styles.input }}
             placeholder="Digite o usuário"
           />
@@ -39,7 +57,7 @@ function Home() {
             placeholder="Digite a senha"
           />
           <button className={styles.button} onClick={autenticar}>
-            Login
+            Cadastro
           </button>
         </Card>
       </Box>

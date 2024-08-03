@@ -1,5 +1,6 @@
 package com.example.UrubuDoPix.controller;
 
+import com.example.UrubuDoPix.dto.TransacaoDTO;
 import com.example.UrubuDoPix.dto.UsuarioDTO;
 import com.example.UrubuDoPix.entity.Usuario;
 import com.example.UrubuDoPix.service.UsuarioService;
@@ -19,7 +20,8 @@ public class UsuarioController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<HttpStatus> cadastraUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        return usuarioService.cadastraUsuario(usuarioDTO);
+        ResponseEntity<HttpStatus> response = usuarioService.cadastraUsuario(usuarioDTO);
+        return response;
     }
 
     @PostMapping("/deletar")
@@ -32,25 +34,24 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findUsuarioById(id));
     }
 
+    @PostMapping("/edit")
+    public ResponseEntity<HttpStatus> editarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        return usuarioService.editarUsuario(usuarioDTO);
+    }
+
     @PostMapping("/autenticar")
     public ResponseEntity<HttpStatus> autenticarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         return usuarioService.autenticarUsuario(usuarioDTO);
     }
 
-//    public ResponseEntity<List<UsuarioModel>> getAllUser () {
-//        return
-//    }
-//
-//
-//    @PutMapping("/user/{id}")
-//    public ResponseEntity<Object> updateProduct(@PathVariable Integer id, @RequestBody @Valid AtualizacaoSaldoDto usuarioDto) {
-//        Optional<UsuarioModel> usuario = usuarioRepository.findById(id);
-//        if(usuario.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
-//        }
-//        var usuarioModel = usuario.get();
-//        BeanUtils.copyProperties(usuarioDto, usuarioModel);
-//        return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.save(usuarioModel));
-//    }
+    @PostMapping("/transacao")
+    public ResponseEntity<HttpStatus> tratarTransacao(@RequestBody TransacaoDTO transacaoDTO) {
+        return usuarioService.tratarTransacao(transacaoDTO);
+    }
+
+    @GetMapping("/findUsuarioByNome/{nome}")
+    public Long findUsuarioByNome(@PathVariable String nome) {
+        return usuarioService.findUsuarioByNome(nome);
+    }
 
 }

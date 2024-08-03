@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./SaqueDeposito.module.css";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const SaqueDeposito = () => {
-  const [user, setUser] = useState({ saldo: 1000 }); // Exemplo de saldo inicial
+  const [user, setUser] = useState({ nome: "", saldo: 0 }); // Exemplo de saldo inicial
   const [isDeposito, setIsDeposito] = useState(false);
   const [isSaque, setIsSaque] = useState(false);
   const [valor, setValor] = useState("");
   const [captchaIsDone, setCaptchaDone] = useState(false);
-
-  const idUser = 102;
 
   const key = "6LcshJonAAAAALkBFoJDMmjMJz5NM7d3IdKaHsMK";
 
@@ -28,39 +26,62 @@ const SaqueDeposito = () => {
     setCaptchaDone(true);
   };
 
-  const fazerDeposito = () => {
-    axios
-      .put(
-        `http://localhost:8080/user/${idUser}`,
-        { saldo: parseFloat(user.saldo) + parseFloat(valor) },
-        { headers: { "Content-Type": "application/json" } }
-      )
-      .then((resposta) => {
-        setUser((prevUser) => ({ ...prevUser, saldo: resposta.data.saldo }));
-        setValor("");
-      })
-      .catch((error) => console.log(error));
+  useEffect(() => {
+    procuraUsuario();
+  });
+
+  const procuraUsuario = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/usuario/findUsuarioById/${localStorage.getItem(
+          "userId"
+        )}`
+      );
+      if (response.status === 200) {
+        setUser(response.data);
+      }
+    } catch (error) {
+      alert("Erro na busca do usuário.");
+      console.error(error);
+    }
   };
 
-  const fazerSaque = () => {
-    const novoSaldo = parseFloat(user.saldo) - parseFloat(valor);
-
-    if (novoSaldo < 0) {
-      alert("O valor do saque deve ser menor do que o saldo atual.");
-      return;
+  const fazerDeposito = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/usuario/transacao",
+        {
+          usuarioId: localStorage.getItem("userId"),
+          valor: valor,
+          isDeposito: true,
+        }
+      );
+      if (response.status === 200) {
+        alert("Deposito realizado com sucesso!");
+      }
+    } catch (error) {
+      alert("Erro no deposito. Por favor, tente novamente.");
+      console.error(error);
     }
+  };
 
-    axios
-      .put(
-        `http://localhost:8080/user/${idUser}`,
-        { saldo: novoSaldo },
-        { headers: { "Content-Type": "application/json" } }
-      )
-      .then((resposta) => {
-        setUser((prevUser) => ({ ...prevUser, saldo: resposta.data.saldo }));
-        setValor("");
-      })
-      .catch((error) => console.log(error));
+  const fazerSaque = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/usuario/transacao",
+        {
+          usuarioId: localStorage.getItem("userId"),
+          valor: valor,
+          isDeposito: false,
+        }
+      );
+      if (response.status === 200) {
+        alert("Saldo realizado com sucesso!");
+      }
+    } catch (error) {
+      alert("Erro no saque. Saldo indisponível.");
+      console.error(error);
+    }
   };
 
   return (
@@ -68,7 +89,7 @@ const SaqueDeposito = () => {
       <div className={styles.card}>
         <h1>Área de transações</h1>
         <div className={styles.usuario}>
-          <h2>Usuário: {user.usuario}</h2>
+          <h2>Usuário: {user.nome}</h2>
           <h2>Saldo atual: R$ {user.saldo} reais</h2>
         </div>
         <div className={styles.geral}>

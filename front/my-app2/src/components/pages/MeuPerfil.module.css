@@ -1,60 +1,73 @@
+/* Container para centralizar o conteúdo vertical e horizontalmente */
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #FFAF00;
-  }
-  
-  .card {
-    padding: 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #7C00FE;
-    width: 25rem;
-    text-align: center;
-  }
-  
-  .profilePic {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    margin-bottom: 1rem;
-  }
-  
-  .text {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: #fff;
-  }
-  
-  .input {
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    width: 100%;
-    height: 2.5rem;
-    padding: 0.5rem;
-    font-size: 1rem;
-  }
-  
-  .button {
-    width: 100%;
-    height: 2.5rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    background-color: #E65C55;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-bottom: 1rem;
-  }
-  
-  .button:hover {
-    background-color: #F5004F;
-  }
-  
-  .modal {
-    padding: 2rem;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #FFAF00;
+  padding: 1rem;
+}
+
+/* Estilo para o cartão principal do perfil */
+.card {
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #7C00FE;
+  width: 25rem;
+  text-align: center;
+  margin-bottom: 1rem; /* Espaço entre o cartão principal e o cartão de edição */
+}
+
+/* Estilo para a imagem do perfil */
+.profilePic {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover; /* Garante que a imagem seja cortada e mantenha a proporção */
+  margin-bottom: 1rem;
+}
+
+/* Estilo para o texto dentro dos cartões */
+.text {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+/* Estilo para os campos de entrada */
+.input {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Estilo para os botões */
+.button {
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: #E65C55;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 1rem;
+}
+
+/* Efeito de hover para os botões */
+.button:hover {
+  background-color: #F5004F;
+}
+
+/* Estilo para o modal de edição */
+.modal {
+  padding: 2rem;
+  width: 25rem; /* Tamanho do modal para ser igual ao cartão */
+  max-width: 90%; /* Evita que o modal ultrapasse a largura da tela em dispositivos menores */
+}

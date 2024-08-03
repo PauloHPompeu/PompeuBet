@@ -1,5 +1,6 @@
 package com.example.UrubuDoPix.service;
 
+import com.example.UrubuDoPix.dto.TransacaoDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.UrubuDoPix.dto.UsuarioDTO;
 import com.example.UrubuDoPix.entity.Usuario;
@@ -29,8 +30,23 @@ public class UsuarioService {
 
         usuario.setNome(usuarioDto.getNome());
         usuario.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
-        usuario.setSaldo(usuarioDto.getSaldo());
+        usuario.setSaldo(0.0);
 
+        usuarioRepository.save(usuario);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<HttpStatus> editarUsuario(UsuarioDTO usuarioDto) {
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioDto.getId())).get();
+
+        if (usuario.getNome() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        usuario.setNome(usuarioDto.getNome());
+        usuario.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
+        usuario.setSaldo(usuario.getSaldo());
         usuarioRepository.save(usuario);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -50,6 +66,11 @@ public class UsuarioService {
         }
     }
 
+    public Long findUsuarioByNome(String nome) {
+        Usuario usuario = usuarioRepository.findByNome(nome);
+        return usuario.getId();
+    }
+
     public ResponseEntity<HttpStatus> autenticarUsuario(UsuarioDTO usuarioDto) {
         Usuario usuario = usuarioRepository.findByNome(usuarioDto.getNome());
 
@@ -63,7 +84,26 @@ public class UsuarioService {
         }
     }
 
-    public Usuario  findUsuarioById(Integer id) {
+    public ResponseEntity<HttpStatus> tratarTransacao(TransacaoDTO transacaoDto) {
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(transacaoDto.getUsuarioId())).get();
+
+        if (transacaoDto.getIsDeposito()) {
+            usuario.setSaldo(usuario.getSaldo() + transacaoDto.getValor());
+            usuarioRepository.save(usuario);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            Double saldo = usuario.getSaldo();
+            if (transacaoDto.getValor() > saldo) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            } else {
+                usuario.setSaldo(usuario.getSaldo() - transacaoDto.getValor());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+    }
+
+    public Usuario findUsuarioById(Integer id) {
         return usuarioRepository.findById(id.longValue()).get();
     }
 }

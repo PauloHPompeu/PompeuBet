@@ -15,6 +15,6 @@ import java.time.LocalDateTime;
 public class EventoDTO {
     private Integer id;
     private String nome;
-    private LocalDateTime data;
+    private LocalDateTime data = LocalDateTime.now();
     private Categoria categoria;
 }

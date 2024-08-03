@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BetDTO {
+    private String nome;
     private Double valor;
     private TipoBet tipoBet;
     private Long usuarioId;

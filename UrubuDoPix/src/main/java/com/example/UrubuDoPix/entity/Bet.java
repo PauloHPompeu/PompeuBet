@@ -21,6 +21,9 @@ public class Bet {
     @Column(name = "valor")
     private Double valor;
 
+    @Column(name = "nome")
+    private String nome;
+
     @Column(name = "tipo_bet")
     @Enumerated(EnumType.STRING)
     private TipoBet tipoBet;

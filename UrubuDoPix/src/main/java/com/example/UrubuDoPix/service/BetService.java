@@ -28,6 +28,7 @@ public class BetService {
     public void cadastraBet(BetDTO betDTO) {
         Bet bet = new Bet();
         bet.setValor(betDTO.getValor());
+        bet.setNome(betDTO.getNome());
         bet.setTipoBet(betDTO.getTipoBet());
 
         Evento evento = eventoRepository.findById(betDTO.getEventoId()).get();

@@ -27,8 +27,11 @@ const SaqueDeposito = () => {
   };
 
   useEffect(() => {
-    procuraUsuario();
-  });
+    if (user.nome === "") {
+      procuraUsuario();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const procuraUsuario = async () => {
     try {
@@ -58,6 +61,8 @@ const SaqueDeposito = () => {
       );
       if (response.status === 200) {
         alert("Deposito realizado com sucesso!");
+        setIsDeposito(false);
+        procuraUsuario();
       }
     } catch (error) {
       alert("Erro no deposito. Por favor, tente novamente.");
@@ -77,6 +82,8 @@ const SaqueDeposito = () => {
       );
       if (response.status === 200) {
         alert("Saldo realizado com sucesso!");
+        setIsSaque(false);
+        procuraUsuario();
       }
     } catch (error) {
       alert("Erro no saque. Saldo indisponível.");

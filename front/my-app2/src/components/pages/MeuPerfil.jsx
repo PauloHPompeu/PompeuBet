@@ -40,7 +40,10 @@ function MeuPerfil() {
   };
 
   useEffect(() => {
-    procuraUsuario();
+    if (user.nome === "") {
+      procuraUsuario();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const procuraUsuario = async () => {

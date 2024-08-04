@@ -1,6 +1,7 @@
 package com.example.UrubuDoPix.service;
 
 import com.example.UrubuDoPix.dto.BetDTO;
+import com.example.UrubuDoPix.dto.ListagemDTO;
 import com.example.UrubuDoPix.entity.Bet;
 import com.example.UrubuDoPix.entity.Evento;
 import com.example.UrubuDoPix.entity.Usuario;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +27,20 @@ public class BetService {
     private final EventoRepository eventoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public void cadastraBet(BetDTO betDTO) {
+    public ResponseEntity<HttpStatus> cadastraBet(BetDTO betDTO) {
         Bet bet = new Bet();
+
+        Usuario usuario = usuarioRepository.findById(betDTO.getUsuarioId()).get();
+        bet.setUsuario(usuario);
+
+        Double saldo = usuario.getSaldo();
+        if (betDTO.getValor() > saldo) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        usuario.setSaldo(saldo - betDTO.getValor());
+
+        usuarioRepository.save(usuario);
+
         bet.setValor(betDTO.getValor());
         bet.setNome(betDTO.getNome());
         bet.setTipoBet(betDTO.getTipoBet());
@@ -34,16 +48,55 @@ public class BetService {
         Evento evento = eventoRepository.findById(betDTO.getEventoId()).get();
         bet.setEvento(evento);
 
-        Usuario usuario = usuarioRepository.findById(betDTO.getUsuarioId()).get();
-        bet.setUsuario(usuario);
-
         betRepository.save(bet);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<HttpStatus> deletarBet(BetDTO betDTO) {
-        Optional<Bet> bet = betRepository.findById(betDTO.getId().longValue());
-        
+    public List<ListagemDTO> findAll() {
+        List<Bet> listaBets = betRepository.findAll();
+
+        List<ListagemDTO> listagemDTO = new ArrayList<>();
+
+        for (Bet bet : listaBets) {
+            ListagemDTO dto = new ListagemDTO();
+
+            dto.setValor(bet.getValor());
+            dto.setNome(bet.getNome());
+            dto.setTipoBet(bet.getTipoBet());
+            dto.setNomeUsuario(bet.getUsuario().getNome());
+            dto.setNomeEvento(bet.getEvento().getNome());
+            dto.setCategoriaEvento(bet.getEvento().getCategoria());
+            dto.setIdBet(bet.getId());
+
+            listagemDTO.add(dto);
+        }
+
+        return listagemDTO;
+    }
+
+    public ResponseEntity<HttpStatus> deletarBet(Long id) {
+        Optional<Bet> bet = betRepository.findById(id);
+
         if (bet.isPresent()) {
+            betRepository.delete(bet.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<HttpStatus> confirmarAposta(Long id) {
+        Optional<Bet> bet = betRepository.findById(id);
+
+        if (bet.isPresent()) {
+            Usuario usuario = bet.get().getUsuario();
+            Double valor = bet.get().getValor();
+            valor = valor * 2;
+
+            usuario.setSaldo(usuario.getSaldo() + valor);
+            usuarioRepository.save(usuario);
+
             betRepository.delete(bet.get());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

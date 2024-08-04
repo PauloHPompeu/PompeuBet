@@ -35,6 +35,7 @@ function Apostas() {
       );
       if (response.status === 200) {
         setShowEvento(false);
+        getEventos();
         alert("Evento cadastrado com sucesso!");
       }
     } catch (error) {
@@ -76,7 +77,7 @@ function Apostas() {
         alert("Aposta cadastrada com sucesso!");
       }
     } catch (error) {
-      alert("Erro no cadastro. Por favor, tente novamente.");
+      alert("Saldo indisponível");
       console.error(error);
     }
   };
@@ -95,7 +96,7 @@ function Apostas() {
           ) : (
             <>
               <TextInput
-                label="Nome do Evento"
+                label="Nome/descrição do Evento"
                 value={nomeEventoEsportivo}
                 onChange={(e) => setNomeEventoEsportivo(e.target.value)}
                 className={styles.input}
@@ -140,7 +141,7 @@ function Apostas() {
               {!showConfirmation ? (
                 <>
                   <TextInput
-                    label="Nome da Aposta"
+                    label="Nome/descrição da Aposta"
                     value={nomeAposta}
                     onChange={(e) => setNomeAposta(e.target.value)}
                     className={styles.input}

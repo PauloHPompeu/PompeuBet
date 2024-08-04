@@ -1,7 +1,9 @@
 package com.example.UrubuDoPix.controller;
 
 import com.example.UrubuDoPix.dto.BetDTO;
+import com.example.UrubuDoPix.dto.ListagemDTO;
 import com.example.UrubuDoPix.entity.Bet;
+import com.example.UrubuDoPix.entity.Evento;
 import com.example.UrubuDoPix.service.BetService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +28,18 @@ public class BetController {
     private final BetService betService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<Void> cadastroEvento(@RequestBody BetDTO betDTO) {
-        betService.cadastraBet(betDTO);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<HttpStatus> cadastroEvento(@RequestBody BetDTO betDTO) {
+        return betService.cadastraBet(betDTO);
     }
 
-    @PostMapping("/deletar")
-    public ResponseEntity<HttpStatus> deletarEvento(@RequestParam BetDTO betDTO) {
-        return betService.deletarBet(betDTO);
+    @PostMapping("/deletar/{id}")
+    public ResponseEntity<HttpStatus> deletarEvento(@PathVariable Long id) {
+        return betService.deletarBet(id);
+    }
+
+    @PostMapping("/confirmarAposta/{id}")
+    public ResponseEntity<HttpStatus> confirmarAposta(@PathVariable Long id) {
+        return betService.confirmarAposta(id);
     }
 
     @GetMapping("/findBetById/{id}")
@@ -44,5 +50,10 @@ public class BetController {
     @GetMapping("/findAllBetByUsuarioId/{id}")
     public ResponseEntity<List<Bet>> findAllBetByUsuarioId (@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(betService.findAllBetByUsuarioId(id));
+    }
+
+    @GetMapping("/findAll")
+    public List<ListagemDTO> findAll () {
+        return betService.findAll();
     }
 }

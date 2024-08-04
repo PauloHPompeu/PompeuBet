@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os cards quebrem linha */
+    justify-content: center; /* Centraliza os cards horizontalmente */
+    align-items: flex-start; /* Alinha os cards ao topo verticalmente */
+    gap: 1rem; /* Espaçamento entre os cards */
+    padding: 2rem; /* Adiciona padding para evitar que os cards fiquem muito próximos das bordas */
+    background-color: #ffaf00;
+  }
+  
+  .card {
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #7c00fe;
+    width: 20rem; /* Define uma largura fixa para os cards */
+    text-align: left; /* Alinha o texto à esquerda */
+    color: #fff; /* Define a cor do texto como branca */
+  }
+  
+  .card p {
+    margin: 0.5rem 0; /* Adiciona margem entre os parágrafos */
+  }
+
+  .geral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  .buttons button {
+    width: 48%;
+    height: 2.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    background-color: #e65c55;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .buttons button:hover {
+    background-color: #f5004f;
+  }

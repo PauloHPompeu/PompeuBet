@@ -91,7 +91,7 @@ function Apostas() {
               onClick={() => setShowEvento(true)}
               className={styles.button}
             >
-              CadastrarEvento
+              Cadastrar Evento
             </Button>
           ) : (
             <>

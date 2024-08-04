@@ -14,11 +14,11 @@ import styles from "./Aposta.module.css";
 
 function Apostas() {
   const [showForm, setShowForm] = useState(false);
+  const [showEvento, setShowEvento] = useState(false);
   const [eventoAposta, setEventoAposta] = useState("");
   const [valorAposta, setValorAposta] = useState();
   const [tipoBet, setTipoBet] = useState();
   const [nomeAposta, setNomeAposta] = useState("");
-  const [showEvento, setShowEvento] = useState(false);
   const [tipoEvento, setTipoEvento] = useState("");
   const [nomeEventoEsportivo, setNomeEventoEsportivo] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -85,147 +85,150 @@ function Apostas() {
   return (
     <MantineProvider>
       <Box className={styles.container}>
-        <Card className={styles.card} shadow="md" withBorder padding="md">
-          {!showEvento ? (
+        <Box className={styles.buttonContainer}>
+          <Button
+            onClick={() => {
+              setShowForm(false);
+              setShowEvento(true);
+            }}
+            className={styles.buttonToggle}
+          >
+            Cadastrar Evento
+          </Button>
+          <Button
+            onClick={() => {
+              setShowEvento(false);
+              setShowForm(true);
+            }}
+            className={styles.buttonToggle}
+          >
+            Criar Aposta
+          </Button>
+        </Box>
+        {showEvento && (
+          <Card className={styles.card} shadow="md" withBorder padding="md">
+            <input
+              label="Nome/descrição do Evento"
+              value={nomeEventoEsportivo}
+              onChange={(e) => setNomeEventoEsportivo(e.target.value)}
+              className={styles.input}
+              placeholder="Digite o nome do evento"
+            />
+            <label className={styles.label}>
+              Tipo do Evento
+              <select
+                value={tipoEvento}
+                onChange={(e) => setTipoEvento(e.target.value)}
+                className={styles.select}
+              >
+                <option value="" disabled>
+                  Selecione o tipo do evento
+                </option>
+                <option value={Categoria.Futebol}>Futebol</option>
+                <option value={Categoria.Basquete}>Basquete</option>
+                <option value={Categoria.Volei}>Volei</option>
+                <option value={Categoria.Golf}>Golf</option>
+                <option value={Categoria.Formula1}>Formula1</option>
+              </select>
+            </label>
+            <Button onClick={saveEvento} className={styles.button}>
+              Confirmar cadastro
+            </Button>
             <Button
-              onClick={() => setShowEvento(true)}
+              onClick={() => setShowEvento(false)}
               className={styles.button}
             >
-              Cadastrar Evento
+              Cancelar
             </Button>
-          ) : (
-            <>
-              <TextInput
-                label="Nome/descrição do Evento"
-                value={nomeEventoEsportivo}
-                onChange={(e) => setNomeEventoEsportivo(e.target.value)}
-                className={styles.input}
-                placeholder="Digite o nome do evento"
-              />
-              <label className={styles.label}>
-                Tipo do Evento
-                <select
-                  value={tipoEvento}
-                  onChange={(e) => setTipoEvento(e.target.value)}
-                  className={styles.select}
-                >
-                  <option value="" disabled>
-                    Selecione o tipo do evento
-                  </option>
-                  <option value={Categoria.Futebol}>Futebol</option>
-                  <option value={Categoria.Basquete}>Basquete</option>
-                  <option value={Categoria.Volei}>Volei</option>
-                  <option value={Categoria.Golf}>Golf</option>
-                  <option value={Categoria.Formula1}>Formula1</option>
-                </select>
-              </label>
-              <Button onClick={() => saveEvento()} className={styles.button}>
-                Confirmar cadastro
-              </Button>
-              <Button
-                onClick={() => setShowEvento(false)}
-                className={styles.button}
-              >
-                Cancelar
-              </Button>
-            </>
-          )}
-        </Card>
-        <Card className={styles.card} shadow="md" withBorder padding="md">
-          {!showForm ? (
-            <Button onClick={() => setShowForm(true)} className={styles.button}>
-              Criar Aposta
-            </Button>
-          ) : (
-            <>
-              {!showConfirmation ? (
-                <>
-                  <TextInput
-                    label="Nome/descrição da Aposta"
-                    value={nomeAposta}
-                    onChange={(e) => setNomeAposta(e.target.value)}
-                    className={styles.input}
-                    placeholder="Digite o nome da aposta"
-                  />
-                  <input
-                    className={styles.input}
-                    type="number"
-                    placeholder="Digite o valor desejado"
-                    value={valorAposta}
-                    onChange={(e) => setValorAposta(e.target.value)}
-                    required
-                  />
-                  <label className={styles.label}>
-                    Evento
-                    <select
-                      value={eventoAposta}
-                      onChange={(e) => setEventoAposta(e.target.value)}
-                      className={styles.select}
-                    >
-                      <option value="" disabled>
-                        Selecione o evento
-                      </option>
-                      {listaEventos.map((evento) => (
-                        <option key={evento.id} value={evento.id}>
-                          {evento.nome}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className={styles.label}>
-                    Tipo da Aposta
-                    <select
-                      value={tipoBet}
-                      onChange={(e) => setTipoBet(e.target.value)}
-                      className={styles.select}
-                    >
-                      <option value="" disabled>
-                        Selecione o tipo da aposta
-                      </option>
-                      <option value={TipoBet.Simples}>Simples</option>
-                      <option value={TipoBet.Multipla}>Multipla</option>
-                      <option value={TipoBet.Bingo}>Bingo</option>
-                    </select>
-                  </label>
-                  <Button
-                    onClick={() => setShowConfirmation(true)}
-                    className={styles.button}
+          </Card>
+        )}
+        {showForm && (
+          <Card className={styles.card} shadow="md" withBorder padding="md">
+            {!showConfirmation ? (
+              <>
+                <input
+                  label="Nome/descrição da Aposta"
+                  value={nomeAposta}
+                  onChange={(e) => setNomeAposta(e.target.value)}
+                  className={styles.input}
+                  placeholder="Digite o nome da aposta"
+                />
+                <input
+                  className={styles.input}
+                  type="number"
+                  placeholder="Digite o valor desejado"
+                  value={valorAposta}
+                  onChange={(e) => setValorAposta(e.target.value)}
+                  required
+                />
+                <label className={styles.label}>
+                  Evento
+                  <select
+                    value={eventoAposta}
+                    onChange={(e) => setEventoAposta(e.target.value)}
+                    className={styles.select}
                   >
-                    Confirmar Aposta
+                    <option value="" disabled>
+                      Selecione o evento
+                    </option>
+                    {listaEventos.map((evento) => (
+                      <option key={evento.id} value={evento.id}>
+                        {evento.nome}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className={styles.label}>
+                  Tipo da Aposta
+                  <select
+                    value={tipoBet}
+                    onChange={(e) => setTipoBet(e.target.value)}
+                    className={styles.select}
+                  >
+                    <option value="" disabled>
+                      Selecione o tipo da aposta
+                    </option>
+                    <option value={TipoBet.Simples}>Simples</option>
+                    <option value={TipoBet.Multipla}>Multipla</option>
+                    <option value={TipoBet.Bingo}>Bingo</option>
+                  </select>
+                </label>
+                <Button
+                  onClick={() => setShowConfirmation(true)}
+                  className={styles.button}
+                >
+                  Confirmar Aposta
+                </Button>
+                <Button
+                  onClick={() => setShowForm(false)}
+                  className={styles.button}
+                >
+                  Cancelar
+                </Button>
+              </>
+            ) : (
+              <Card
+                opened={showConfirmation}
+                onClose={() => setShowConfirmation(false)}
+                title="Confirmar Aposta"
+                className={styles.card}
+              >
+                <p>Deseja realmente criar esta aposta?</p>
+                <Group position="right" mt="md">
+                  <Button onClick={handleSave} className={styles.button}>
+                    Confirmar
                   </Button>
                   <Button
-                    onClick={() => setShowForm(false)}
+                    onClick={() => setShowConfirmation(false)}
                     className={styles.button}
                   >
                     Cancelar
                   </Button>
-                </>
-              ) : (
-                <>
-                  <Card
-                    opened={showConfirmation}
-                    onClose={() => setShowConfirmation(false)}
-                    title="Confirmar Aposta"
-                    className={styles.card}
-                  >
-                    <p>Deseja realmente criar esta aposta?</p>
-                    <Group position="right" mt="md">
-                      <Button onClick={handleSave} className={styles.button}>
-                        Confirmar
-                      </Button>
-                      <Button
-                        onClick={() => setShowConfirmation(false)}
-                        className={styles.button}
-                      >
-                        Cancelar
-                      </Button>
-                    </Group>
-                  </Card>
-                </>
-              )}
-            </>
-          )}
-        </Card>
+                </Group>
+              </Card>
+            )}
+          </Card>
+        )}
       </Box>
     </MantineProvider>
   );

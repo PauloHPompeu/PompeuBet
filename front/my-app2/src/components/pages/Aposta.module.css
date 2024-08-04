@@ -7,50 +7,59 @@
   background-color: #FFAF00;
 }
 
+.buttonContainer {
+  display: flex;
+  gap: 1rem; /* Espaço entre os botões */
+  margin-bottom: 1rem; /* Espaço abaixo dos botões */
+}
+
 .card {
   padding: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #7C00FE;
-  width: 25rem;  /* Ajusta a largura do card */
-  margin-bottom: 1rem;  /* Adiciona espaço entre os cards */
+  width: 25rem; /* Ajusta a largura do card */
+  margin-bottom: 1rem; /* Adiciona espaço entre os cards */
 }
 
 .input, .select {
   margin-bottom: 1rem;
   border-radius: 8px;
-  width: 100%;  /* Usa a largura completa disponível */
-  height: 2.5rem;  /* Aumenta a altura dos inputs */
+  width: 100%; /* Usa a largura completa disponível */
+  height: 2.5rem; /* Aumenta a altura dos inputs */
   padding: 0.5rem; /* Adiciona padding para melhor estética */
   font-size: 1rem; /* Aumenta o tamanho da fonte */
 }
 
 .button {
-  width: 100%; /* Usa a largura completa disponível */
-  height: 2.5rem; /* Aumenta a altura do botão */
-  font-size: 1rem; /* Aumenta o tamanho da fonte */
+  width: 20rem; /* Largura dos botões */
+  height: 2.5rem; /* Altura dos botões */
+  font-size: 1rem; /* Tamanho da fonte dos botões */
   border-radius: 8px; /* Bordas arredondadas */
-  background-color: #E65C55; /* Cor de fundo do botão */
-  color: #fff; /* Cor do texto do botão */
-  border: none; /* Remove a borda do botão */
+  background-color: #E65C55; /* Cor de fundo dos botões */
+  color: #fff; /* Cor do texto dos botões */
+  border: none; /* Remove a borda dos botões */
   cursor: pointer; /* Adiciona cursor de pointer */
   transition: background-color 0.3s; /* Adiciona transição suave para a cor de fundo */
   margin-bottom: 1rem; /* Espaçamento entre botões */
 }
 
 .button:hover {
-  background-color: #F5004F; /* Cor de fundo do botão ao passar o mouse */
+  background-color: #F5004F; /* Cor de fundo dos botões ao passar o mouse */
 }
 
-.modal {
-  padding: 2rem;
+.buttonToggle {
+  width: 20rem; /* Largura dos botões de alternância */
+  height: 2.5rem; /* Altura dos botões de alternância */
+  font-size: 1rem; /* Tamanho da fonte dos botões de alternância */
+  border-radius: 8px; /* Bordas arredondadas */
+  background-color: #E65C55; /* Cor de fundo dos botões de alternância */
+  color: #fff; /* Cor do texto dos botões de alternância */
+  border: none; /* Remove a borda dos botões de alternância */
+  cursor: pointer; /* Adiciona cursor de pointer */
+  transition: background-color 0.3s; /* Adiciona transição suave para a cor de fundo */
 }
 
-.modal .input {
-  margin-bottom: 1rem;
-}
-
-.modal .button {
-  width: auto; /* Ajusta a largura dos botões no modal */
-  margin-right: 1rem; /* Espaçamento entre botões no modal */
+.buttonToggle:hover {
+  background-color: #F5004F; /* Cor de fundo dos botões de alternância ao passar o mouse */
 }

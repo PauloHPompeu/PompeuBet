@@ -78,18 +78,20 @@ function MeuPerfil() {
         </Card>
         {editProfile && (
           <Card className={styles.card} shadow="md" withBorder padding="md">
-            <TextInput
+            <input
               label="Nome"
               defaultValue={user.nome}
               onChange={(e) => setUserEdit(e.target.value)}
               className={styles.input}
+              placeholder="Digite o novo nome"
             />
 
-            <TextInput
+            <input
               label="Nova Senha"
               type="password"
               className={styles.input}
               onChange={(e) => setSenhaEdit(e.target.value)}
+              placeholder="Digite a nova senha"
             />
             <Group position="right" mt="md">
               <Button onClick={handleSaveProfile} className={styles.button}>
